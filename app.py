@@ -1,4 +1,4 @@
-from flask import Flask, abort, make_response, request, url_for, jsonify
+from flask import Flask, abort, make_response, request, jsonify
 import psycopg2 as psy2
 import os
 import dotenv
@@ -17,8 +17,12 @@ db_password = os.getenv("DB_PASSWORD")
 db_host = os.getenv("DB_HOST")
 db_port = os.getenv("DB_PORT")
 
-conn = psy2.connect(database=db_name, user=db_user, password=db_password, host=db_host, port=db_port)
-cursor = conn.cursor()
+try:
+    conn = psy2.connect(database=db_name, user=db_user, password=db_password, host=db_host, port=db_port)
+    cursor = conn.cursor()
+except Exception as e:
+    print(f"Error connecting to the database: {e}")
+    raise
 
 def validate_user_data(data):
     required_fields = ['name', 'cpf_cnpj', 'password', 'email', 'balance']
