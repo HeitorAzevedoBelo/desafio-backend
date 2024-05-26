@@ -55,12 +55,8 @@ def create_user():
         )
         conn.commit()
         return make_response(jsonify('User created successfully'), 201)
-    except psy2.IntegrityError as e:
-        print(f"Integrity error: {e}")
+    except:
         return make_response(jsonify("This user already exists"), 400)
-    except Exception as e:
-        print(f"Error: {e}")
-        return make_response(jsonify("Internal server error"), 500)
 
 @app.get('/get_all_users')
 def get_all_users():
@@ -77,6 +73,7 @@ def get_all_users():
 @app.post('/transfer')
 def transfer():
     authorize_service_url = r'https://util.devi.tools/api/v2/authorize'
+    notify_service_url = r'https://util.devi.tools/api/v1/notify' 
     if not request.is_json:
         return make_response(jsonify("Invalid input"), 400)
     
@@ -107,7 +104,7 @@ def transfer():
         cursor.execute('UPDATE users SET balance = balance - %s WHERE id = %s', [value, payer_id])
         cursor.execute('INSERT INTO log_transfers (payee, payer, value) VALUES (%s, %s, %s)', [payee_id, payer_id, value])
         conn.commit()
-
+        requests.post(notify_service_url)
         return make_response(jsonify('Transfer completed successfully'), 200)
     except psy2.DatabaseError as e:
         print(f"Database error: {e}")

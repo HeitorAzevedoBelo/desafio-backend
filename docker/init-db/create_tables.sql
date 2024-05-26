@@ -3,16 +3,15 @@ CREATE TABLE users (
     cpf_cnpj BIGINT UNIQUE NOT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
     name VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
     balance NUMERIC NOT NULL DEFAULT 0,
     is_seller BOOLEAN NOT NULL DEFAULT false
 );
 
-CREATE TABLE log_transacoes (
+CREATE TABLE log_transfers (
     id SERIAL NOT NULL PRIMARY KEY,
     payer BIGINT NOT NULL,
     payee BIGINT NOT NULL,
     value NUMERIC NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (payer) REFERENCES users(cpf_cnpj),
-    FOREIGN KEY (payee) REFERENCES users(cpf_cnpj)
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

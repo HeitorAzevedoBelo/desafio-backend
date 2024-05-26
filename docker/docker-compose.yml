@@ -10,7 +10,6 @@ services:
     ports:
       - "9090:5432"
     volumes:
-      - db_data:/var/lib/postgresql/data
       - ./init-db:/docker-entrypoint-initdb.d
 
   adminer:
