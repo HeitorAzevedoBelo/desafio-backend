@@ -30,4 +30,4 @@ def test_transfer(client):
         'value': 50.0
     }
     response = client.post('/transfer', json=transfer_data)
-    assert response.status_code in [200, 400, 401]  # Considering different possible responses
+    assert response.status_code in [200, 400, 401]
