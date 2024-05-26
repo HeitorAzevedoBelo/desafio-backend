@@ -20,7 +20,9 @@ jobs:
           sudo chmod +x /usr/local/bin/docker-compose
 
       - name: Start services
-        run: docker-compose up -d
+        run: |
+          cd ./docker
+          docker-compose up -d
 
       - name: Wait for PostgreSQL
         run: |
