@@ -1,0 +1,19 @@
+meta {
+  name: transfer
+  type: http
+  seq: 3
+}
+
+post {
+  url: http://127.0.0.1:5000/transfer
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "value": 50,
+    "payer": 17,
+    "payee": 22
+  }
+}

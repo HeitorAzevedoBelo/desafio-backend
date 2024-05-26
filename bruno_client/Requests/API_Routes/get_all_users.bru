@@ -1,0 +1,21 @@
+meta {
+  name: get_all_users
+  type: http
+  seq: 1
+}
+
+get {
+  url: http://127.0.0.1:5000/get_all_users
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "nome": "Heitor",
+    "cpf": "47092759803",
+    "senha": "65695300",
+    "email": "heitorazevedo5511@gmail.com",
+    "saldo": 1347.38
+  }
+}
