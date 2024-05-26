@@ -59,7 +59,8 @@ def create_user():
         )
         conn.commit()
         return make_response(jsonify('User created successfully'), 201)
-    except:
+    except Exception as e:
+        print(e)
         return make_response(jsonify("This user already exists"), 400)
 
 @app.get('/get_all_users')

@@ -14,28 +14,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up Docker Compose
-        run: |
-          sudo curl -L "https://github.com/docker/compose/releases/download/v2.17.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-          sudo chmod +x /usr/local/bin/docker-compose
-
-      - name: Start services
-        run: |
-          cd ./docker
-          docker-compose up -d
-
-      - name: Wait for PostgreSQL
-        run: |
-          cd ./docker
-          until docker-compose exec db pg_isready -U postgres; do
-            echo "Waiting for PostgreSQL to be ready..."
-            sleep 1
-          done
-
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: "3.9"
+          python-version: "3.12"
 
       - name: Install dependencies
         run: |
@@ -43,10 +25,4 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run tests
-        env:
-          DB_HOST: localhost
-          DB_NAME: desafio_backend
-          DB_USER: postgres
-          DB_PASSWORD: postgres
-          DB_PORT: 9090
         run: pytest
